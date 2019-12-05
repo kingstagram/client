@@ -1,14 +1,22 @@
 <template>
-    <h1>{{ message }}</h1>
+    <div>
+        <h1>{{ message }}</h1>
+        <login-component/>
+
+    </div>
 </template>
 
 <script>
+    import loginComponent from "./components/loginComponent";
+
     export default {
-        data: function() {
+        data: function () {
             return {
-                message: 'Hello world',
             };
         },
+        components: {
+            loginComponent
+        }
     };
 </script>
 
