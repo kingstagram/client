@@ -5,10 +5,8 @@
                 Home
             </a>
             <a class="item">
-                Messages
-            </a>
-            <a class="item">
-                Friends
+                <i class="user link icon"></i>
+                {{ username }}
             </a>
             <div class="right menu">
                 <div class="item">
@@ -22,9 +20,6 @@
                 Logout
             </a>
         </div>
-        <div class="ui segment">
-            <p></p>
-        </div>
     </div>
 </template>
 
@@ -32,11 +27,13 @@
     export default {
         name: 'mainNavbarcomponent',
         data() {
-            return {};
+            return {
+                username: localStorage.username
+            };
         },
         methods: {
             logout: function () {
-                document.cookie = "";
+                localStorage.clear();
                 location.reload();
             }
         },

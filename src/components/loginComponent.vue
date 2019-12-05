@@ -72,7 +72,8 @@
                 }).then(response => {
                     this.message="User successfully login";
                     this.isMessage = true;
-                    document.cookie = response.data.token;
+                    localStorage.token = response.data.token;
+                    localStorage.username = response.data.username;
                     location.reload();
                 }).catch(err => {
                     this.message = err;

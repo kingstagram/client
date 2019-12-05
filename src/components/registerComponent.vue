@@ -64,6 +64,9 @@
                 }).then(response => {
                     this.message = "User successfully created";
                     this.isMessage = true;
+                    localStorage.token = response.data.token;
+                    localStorage.username = response.data.username;
+                    location.reload();
                 }).catch(err => {
                     this.message = err;
                     this.isMessage = true;
