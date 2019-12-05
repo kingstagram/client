@@ -1,27 +1,21 @@
 <template lang="html">
     <div class="page-login">
+        <!--        register component here-->
         <register-component v-if="isRegister" @backtohome="backtohome"></register-component>
         <div class="ui centered grid container" v-if="isLogin">
             <div class="nine wide column">
-                <div class="ui icon warning message">
-                    <i class="lock icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            Login failed!
-                        </div>
-                        <p>You might have misspelled your username or password!</p>
-                    </div>
-                </div>
+                <!--                message component here-->
+                <message-component v-if="isMessage" :title="title" :message="message"></message-component>
                 <div class="ui fluid card">
                     <div class="content">
                         <form class="ui form" @submit="login">
                             <div class="field">
-                                <label>User Name</label>
-                                <input type="text" name="username" placeholder="User Name">
+                                <label>Email</label>
+                                <input type="text" name="email" placeholder="Email" v-model="email">
                             </div>
                             <div class="field">
                                 <label>Password</label>
-                                <input type="password" name="password" placeholder="Password">
+                                <input type="password" name="password" placeholder="Password" v-model="password">
                             </div>
                             <button class="ui primary labeled icon button" type="submit">
                                 <i class="unlock alternate icon"></i>
@@ -40,15 +34,21 @@
 </template>
 
 <script>
-
     import registerComponent from "./registerComponent";
+    import messageComponent from "./messageComponent";
+    import axios from 'axios';
 
     export default {
         name: "loginComponent",
         data() {
             return {
                 isRegister: false,
-                isLogin: true
+                isLogin: true,
+                isMessage: false,
+                email: null,
+                password: null,
+                message: null,
+                title: "User Sign In"
             }
         },
         methods: {
@@ -60,12 +60,28 @@
                 this.isRegister = false,
                     this.isLogin = true
             },
-            login: function(e){
-                e.prevent.default();
+            login: function (e) {
+                e.preventDefault()
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:3000/users/login',
+                    data: {
+                        email: this.email,
+                        password: this.password
+                    }
+                }).then(response => {
+                    this.message="User successfully login";
+                    this.isMessage = true;
+                    document.cookie = response.data.token;
+                }).catch(err => {
+                    this.message = err;
+                    this.isMessage = true;
+                })
             }
         },
         components: {
-            registerComponent
+            registerComponent,
+            messageComponent
         }
     }
 </script>

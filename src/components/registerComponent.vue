@@ -2,15 +2,8 @@
     <div class="ui centered grid container">
 
         <div class="nine wide column">
-            <div class="ui icon warning message" v-if="isMessage">
-                <i class="lock icon"></i>
-                <div class="content">
-                    <div class="header">
-                        Registration User
-                    </div>
-                    <p>{{ message }}</p>
-                </div>
-            </div>
+<!--            message here-->
+            <message-component v-if="isMessage" :title="title" :message="message"></message-component>
 
             <form class="ui form" @submit="registerUser">
                 <div class="field">
@@ -40,6 +33,7 @@
 
 <script>
     import axios from 'axios';
+    import messageComponent from "./messageComponent";
 
     export default {
         name: "registerComponent",
@@ -49,7 +43,8 @@
                 password:null,
                 email:null,
                 isMessage: false,
-                message: null
+                message: null,
+                title: "User Regitration"
             }
         },
         methods: {
@@ -74,6 +69,9 @@
                     this.isMessage = true;
                 });
             }
+        },
+        components: {
+            messageComponent
         }
     }
 </script>

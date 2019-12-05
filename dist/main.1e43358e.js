@@ -10597,7 +10597,97 @@ function patchScopedSlots (instance) {
   }
 }
 
-},{}],"src/components/registerComponent.vue":[function(require,module,exports) {
+},{}],"src/components/messageComponent.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "message",
+  props: {
+    title: String,
+    message: String
+  },
+  data: function data() {
+    return {
+      title: this.props.title,
+      message: this.props.message
+    };
+  }
+};
+exports.default = _default;
+        var $35f63d = exports.default || module.exports;
+      
+      if (typeof $35f63d === 'function') {
+        $35f63d = $35f63d.options;
+      }
+    
+        /* template */
+        Object.assign($35f63d, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ui icon warning message" }, [
+    _c("i", { staticClass: "lock icon" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "content" }, [
+      _c("div", { staticClass: "header" }, [
+        _vm._v("\n            " + _vm._s(_vm.title) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v(_vm._s(_vm.message))])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: "data-v-35f63d",
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$35f63d', $35f63d);
+          } else {
+            api.reload('$35f63d', $35f63d);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/registerComponent.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10607,15 +10697,10 @@ exports.default = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _messageComponent = _interopRequireDefault(require("./messageComponent"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10657,7 +10742,8 @@ var _default = {
       password: null,
       email: null,
       isMessage: false,
-      message: null
+      message: null,
+      title: "User Regitration"
     };
   },
   methods: {
@@ -10684,6 +10770,9 @@ var _default = {
         _this.isMessage = true;
       });
     }
+  },
+  components: {
+    messageComponent: _messageComponent.default
   }
 };
 exports.default = _default;
@@ -10700,123 +10789,126 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ui centered grid container" }, [
-    _c("div", { staticClass: "nine wide column" }, [
-      _vm.isMessage
-        ? _c("div", { staticClass: "ui icon warning message" }, [
-            _c("i", { staticClass: "lock icon" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "content" }, [
-              _c("div", { staticClass: "header" }, [
-                _vm._v(
-                  "\n                    Registration User\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(_vm.message))])
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("form", { staticClass: "ui form", on: { submit: _vm.registerUser } }, [
-        _c("div", { staticClass: "field" }, [
-          _c("label", [_vm._v("User Name")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.username,
-                expression: "username"
-              }
-            ],
-            attrs: { type: "text", name: "username", placeholder: "User Name" },
-            domProps: { value: _vm.username },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.username = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "field" }, [
-          _c("label", [_vm._v("Email")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.email,
-                expression: "email"
-              }
-            ],
-            attrs: { type: "email", name: "email", placeholder: "Email" },
-            domProps: { value: _vm.email },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.email = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "field" }, [
-          _c("label", [_vm._v("Password")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.password,
-                expression: "password"
-              }
-            ],
-            attrs: {
-              type: "password",
-              name: "password",
-              placeholder: "Password"
-            },
-            domProps: { value: _vm.password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.password = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
+    _c(
+      "div",
+      { staticClass: "nine wide column" },
+      [
+        _vm.isMessage
+          ? _c("message-component", {
+              attrs: { title: _vm.title, message: _vm.message }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c(
-          "button",
-          {
-            staticClass: "ui red labeled icon button",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.backToHome($event)
-              }
-            }
-          },
+          "form",
+          { staticClass: "ui form", on: { submit: _vm.registerUser } },
           [
-            _c("i", { staticClass: "home alternate icon" }),
-            _vm._v("\n                Home\n            ")
+            _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v("User Name")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.username,
+                    expression: "username"
+                  }
+                ],
+                attrs: {
+                  type: "text",
+                  name: "username",
+                  placeholder: "User Name"
+                },
+                domProps: { value: _vm.username },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.username = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
+                  }
+                ],
+                attrs: { type: "email", name: "email", placeholder: "Email" },
+                domProps: { value: _vm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field" }, [
+              _c("label", [_vm._v("Password")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                attrs: {
+                  type: "password",
+                  name: "password",
+                  placeholder: "Password"
+                },
+                domProps: { value: _vm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "ui red labeled icon button",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.backToHome($event)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "home alternate icon" }),
+                _vm._v("\n                    Home\n                ")
+              ]
+            )
           ]
         )
-      ])
-    ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -10832,7 +10924,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "user alternate icon" }),
-        _vm._v("\n                Register\n            ")
+        _vm._v("\n                    Register\n                ")
       ]
     )
   }
@@ -10869,7 +10961,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/loginComponent.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./messageComponent":"src/components/messageComponent.vue","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/loginComponent.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10879,14 +10971,12 @@ exports.default = void 0;
 
 var _registerComponent = _interopRequireDefault(require("./registerComponent"));
 
+var _messageComponent = _interopRequireDefault(require("./messageComponent"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10927,7 +11017,12 @@ var _default = {
   data: function data() {
     return {
       isRegister: false,
-      isLogin: true
+      isLogin: true,
+      isMessage: false,
+      email: null,
+      password: null,
+      message: null,
+      title: "User Sign In"
     };
   },
   methods: {
@@ -10938,11 +11033,29 @@ var _default = {
       this.isRegister = false, this.isLogin = true;
     },
     login: function login(e) {
-      e.prevent.default();
+      var _this = this;
+
+      e.preventDefault();
+      (0, _axios.default)({
+        method: 'post',
+        url: 'http://localhost:3000/users/login',
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      }).then(function (response) {
+        _this.message = "User successfully login";
+        _this.isMessage = true;
+        document.cookie = response.data.token;
+      }).catch(function (err) {
+        _this.message = err;
+        _this.isMessage = true;
+      });
     }
   },
   components: {
-    registerComponent: _registerComponent.default
+    registerComponent: _registerComponent.default,
+    messageComponent: _messageComponent.default
   }
 };
 exports.default = _default;
@@ -10968,44 +11081,107 @@ exports.default = _default;
       _vm._v(" "),
       _vm.isLogin
         ? _c("div", { staticClass: "ui centered grid container" }, [
-            _c("div", { staticClass: "nine wide column" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "ui fluid card" }, [
-                _c("div", { staticClass: "content" }, [
-                  _c(
-                    "form",
-                    { staticClass: "ui form", on: { submit: _vm.login } },
-                    [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._m(3),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "ui black labeled icon button",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.register($event)
+            _c(
+              "div",
+              { staticClass: "nine wide column" },
+              [
+                _vm.isMessage
+                  ? _c("message-component", {
+                      attrs: { title: _vm.title, message: _vm.message }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "ui fluid card" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c(
+                      "form",
+                      { staticClass: "ui form", on: { submit: _vm.login } },
+                      [
+                        _c("div", { staticClass: "field" }, [
+                          _c("label", [_vm._v("Email")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.email,
+                                expression: "email"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              name: "email",
+                              placeholder: "Email"
+                            },
+                            domProps: { value: _vm.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.email = $event.target.value
+                              }
                             }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "user icon" }),
-                          _vm._v(
-                            "\n                            Sign Up\n                        "
-                          )
-                        ]
-                      )
-                    ]
-                  )
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "field" }, [
+                          _c("label", [_vm._v("Password")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.password,
+                                expression: "password"
+                              }
+                            ],
+                            attrs: {
+                              type: "password",
+                              name: "password",
+                              placeholder: "Password"
+                            },
+                            domProps: { value: _vm.password },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.password = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "ui black labeled icon button",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.register($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "user icon" }),
+                            _vm._v(
+                              "\n                            Sign Up\n                        "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
                 ])
-              ])
-            ])
+              ],
+              1
+            )
           ])
         : _vm._e()
     ],
@@ -11013,50 +11189,6 @@ exports.default = _default;
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ui icon warning message" }, [
-      _c("i", { staticClass: "lock icon" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "content" }, [
-        _c("div", { staticClass: "header" }, [
-          _vm._v(
-            "\n                        Login failed!\n                    "
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v("You might have misspelled your username or password!")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("label", [_vm._v("User Name")]),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { type: "text", name: "username", placeholder: "User Name" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("label", [_vm._v("Password")]),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { type: "password", name: "password", placeholder: "Password" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -11108,7 +11240,185 @@ render._withStripped = true
       
       }
     })();
-},{"./registerComponent":"src/components/registerComponent.vue","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"./registerComponent":"src/components/registerComponent.vue","./messageComponent":"src/components/messageComponent.vue","axios":"node_modules/axios/index.js","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/mainNavbarComponent.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "mainNavbarComponent"
+};
+exports.default = _default;
+        var $bd37c5 = exports.default || module.exports;
+      
+      if (typeof $bd37c5 === 'function') {
+        $bd37c5 = $bd37c5.options;
+      }
+    
+        /* template */
+        Object.assign($bd37c5, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ui pointing menu" }, [
+      _c("a", { staticClass: "active item" }, [_vm._v("Home")]),
+      _vm._v(" "),
+      _c("a", { staticClass: "item" }, [_vm._v("Messages")]),
+      _vm._v(" "),
+      _c("a", { staticClass: "item" }, [_vm._v("Friends")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "right menu" }, [
+        _c("div", { staticClass: "item" }, [
+          _c("div", { staticClass: "ui transparent icon input" }, [
+            _c("input", { attrs: { type: "text", placeholder: "Search..." } }),
+            _vm._v(" "),
+            _c("i", { staticClass: "search link icon" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "ui item" }, [_vm._v("Logout")])
+    ])
+  }
+]
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: "data-v-bd37c5",
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$bd37c5', $bd37c5);
+          } else {
+            api.reload('$bd37c5', $bd37c5);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/mainContainerComponent.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _mainNavbarComponent = _interopRequireDefault(require("./mainNavbarComponent"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "mainContainerComponent",
+  components: {
+    mainNavbarComponent: _mainNavbarComponent.default
+  }
+};
+exports.default = _default;
+        var $d6cfe7 = exports.default || module.exports;
+      
+      if (typeof $d6cfe7 === 'function') {
+        $d6cfe7 = $d6cfe7.options;
+      }
+    
+        /* template */
+        Object.assign($d6cfe7, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ui container" },
+    [_c("main-navbar-component"), _vm._v(" "), _c("p")],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: "data-v-d6cfe7",
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$d6cfe7', $d6cfe7);
+          } else {
+            api.reload('$d6cfe7', $d6cfe7);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"./mainNavbarComponent":"src/components/mainNavbarComponent.vue","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11117,6 +11427,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _loginComponent = _interopRequireDefault(require("./components/loginComponent"));
+
+var _mainContainerComponent = _interopRequireDefault(require("./components/mainContainerComponent"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11130,12 +11442,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = {
   data: function data() {
     return {
-      message: "Kingstagram"
+      isLogin: false
     };
   },
-  methods: {},
   components: {
-    loginComponent: _loginComponent.default
+    loginComponent: _loginComponent.default,
+    mainContainerComponent: _mainContainerComponent.default
   }
 };
 exports.default = _default;
@@ -11154,9 +11466,9 @@ exports.default = _default;
   return _c(
     "div",
     [
-      _c("h1", [_vm._v(_vm._s(_vm.message))]),
+      !_vm.isLogin ? _c("login-component") : _vm._e(),
       _vm._v(" "),
-      _c("login-component")
+      _vm.isLogin ? _c("main-container-component") : _vm._e()
     ],
     1
   )
@@ -11194,7 +11506,7 @@ render._withStripped = true
       
       }
     })();
-},{"./components/loginComponent":"src/components/loginComponent.vue","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/core-js/library/modules/_global.js":[function(require,module,exports) {
+},{"./components/loginComponent":"src/components/loginComponent.vue","./components/mainContainerComponent":"src/components/mainContainerComponent.vue","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/core-js/library/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -27732,7 +28044,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63542" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64839" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

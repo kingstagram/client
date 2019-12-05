@@ -1,23 +1,23 @@
 <template>
     <div>
-        <h1>{{ message }}</h1>
-        <login-component></login-component>
+        <login-component v-if="!isLogin"></login-component>
+        <main-container-component v-if="isLogin"></main-container-component>
     </div>
 </template>
 
 <script>
     import loginComponent from "./components/loginComponent";
+    import mainContainerComponent from "./components/mainContainerComponent";
 
     export default {
         data: function () {
             return {
-                message: "Kingstagram"
+                isLogin: false,
             };
         },
-        methods: {
-        },
         components: {
-            loginComponent
+            loginComponent,
+            mainContainerComponent
         }
     };
 </script>
