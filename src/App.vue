@@ -1,8 +1,7 @@
 <template>
     <div>
         <h1>{{ message }}</h1>
-        <login-component/>
-
+        <login-component></login-component>
     </div>
 </template>
 
@@ -12,7 +11,10 @@
     export default {
         data: function () {
             return {
+                message: "Kingstagram"
             };
+        },
+        methods: {
         },
         components: {
             loginComponent
