@@ -73,6 +73,7 @@
                     this.message="User successfully login";
                     this.isMessage = true;
                     document.cookie = response.data.token;
+                    location.reload();
                 }).catch(err => {
                     this.message = err;
                     this.isMessage = true;

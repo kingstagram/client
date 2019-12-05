@@ -12,12 +12,20 @@
     export default {
         data: function () {
             return {
-                isLogin: false,
+                cookies: document.cookie,
+                isLogin: false
             };
         },
         components: {
             loginComponent,
             mainContainerComponent
+        },
+        mounted(){
+            if (document.cookie){
+                this.isLogin = true;
+            } else {
+                this.isLogin = false;
+            }
         }
     };
 </script>
