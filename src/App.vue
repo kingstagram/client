@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- <h1>KINGSTAGRAM</h1> -->
         <login-component v-if="!isLogin"></login-component>
         <main-container-component class="animated fadeInDown" v-if="isLogin"></main-container-component>
     </div>
@@ -31,4 +32,7 @@
 </script>
 
 <style scoped>
+    login-component {
+        font-family: 'Raleway', sans-serif;
+    }
 </style>
