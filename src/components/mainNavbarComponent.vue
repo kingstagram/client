@@ -8,6 +8,9 @@
                 <i class="user link icon"></i>
                 {{ username }}
             </a>
+            <a class="item" data-content="Add New Post">
+                <i class="plus link icon"></i>
+            </a>
             <div class="right menu">
                 <div class="item">
                     <div class="ui transparent icon input">

@@ -1,5 +1,6 @@
 <template>
     <div class="ui card">
+<<<<<<< HEAD
        <div class="content">
            <div class="right floated meta">
                         <div
@@ -22,6 +23,13 @@
                         </div>
             </div>
             <img class="ui avatar image" v-bind:src="post.userId.profileImage">
+=======
+        <div class="content">
+            <!-- tap to share button -->
+            <div class="right floated meta">14h</div>
+            <!-- change to avatar -->
+            <img class="ui avatar image" v-bind:src="post.useravatar">
+>>>>>>> 1875e9dd88208751894755026c646de450dd30c2
             {{ username }}
         </div>
         <div class="image">
@@ -32,8 +40,8 @@
         </div>
         <div class="content">
             <span class="right floated">
-            <i class="heart outline like icon" @click="likePost(post._id)"></i>
-            {{post.likes.length}}
+                <i class="heart outline like icon" @click="likePost(post._id)"></i>
+                {{post.likes.length}}
             </span>
             <div>
                 <i class="comment icon" @click="toggleModal"></i>
@@ -45,8 +53,9 @@
             <!-- <button type="button" class="btn btn-outline-primary btn-sm">View comment</button> -->
             <!-- <div class="ui large transparent left icon input">
                 <form>
-                <i class="heart outline icon"></i>
-                <input @keyup.enter="addComment(post._id)" type="text" id="comment-input" placeholder="Add Comment...">
+                    <i class="heart outline icon"></i>
+                    <input @keyup.enter="addComment(post._id)" type="text" id="comment-input"
+                           placeholder="Add Comment...">
                 </form>
             </div> -->
         <!-- </div> -->
@@ -56,53 +65,95 @@
 
 <script>
     import axios from 'axios';
-    import commentModal from "./commentModal";
+
+    const url = "http://104.198.195.12";
+    // import commentModal from "./commentModal";
 
     export default {
         name: 'cardComponent',
-        data () {
+        data() {
             return {
                 showModal: false,
                 id: '',
                 message: '',
                 isMessage: false,
-                username: localStorage.getItem('username')
+                username: null
             }
         },
         props: ['post'],
         methods: {
+<<<<<<< HEAD
             likePost: function(id) {
+=======
+            viewComment: function (id) {
                 axios({
-                    method: 'put',
-                    url: `http://localhost:3000/posts/like/${id}`,
+                    method: 'get',
+                    url: `${url}/comments/all/${id}`,
                     headers: {
-                        // token: localStorage.getItem('token')
-                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+                        token: localStorage.token
                     }
                 }).then(response => {
-                    // console.log('masuk')
+                    console.log('masuk')
+                    this.comments = response.data
+                }).catch(err => {
+                    this.message = err;
+                    this.isMessage = true;
+                });
+            },
+            likePost: function (id) {
+>>>>>>> 1875e9dd88208751894755026c646de450dd30c2
+                axios({
+                    method: 'put',
+                    url: `${url}//posts/like/${id}`,
+                    headers: {
+                        token: localStorage.getItem('token')
+                    }
+                }).then(response => {
                     this.$emit('like')
                 }).catch(err => {
                     this.message = err;
                     this.isMessage = true;
                 });
             },
+<<<<<<< HEAD
             toggleModal: function() {
                 if (this.showModal) {
                     this.showModal = false
                 } else {
                     this.showModal = true
                 }
+=======
+            addComment: function (id) {
+                axios({
+                    method: 'get',
+                    url: `${url}//comments/add/${id}`,
+                    headers: {
+                        token: localStorage.getItem('token')
+                    },
+                    data: {
+                        content: document.getElementById('comment-input')
+                    }
+                }).then(response => {
+                    console.log('masuk')
+                    this.$emit('add-comment')
+                }).catch(err => {
+                    this.message = err;
+                    this.isMessage = true;
+                });
+>>>>>>> 1875e9dd88208751894755026c646de450dd30c2
             }
         },
         components: {
-            commentModal
+            // commentModal
         }
     }
 </script>
 
 <style scoped>
-
+    .card {
+        max-width: 19em;
+        margin: 5px;
+    }
 </style>
 
                 
