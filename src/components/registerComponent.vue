@@ -1,8 +1,7 @@
 <template lang="html">
-    <div class="ui centered grid container">
+    <div class="ui centered grid container animated pulse">
 
-        <div class="nine wide column">
-<!--            message here-->
+        <div class="nine wide column" id="border">
             <message-component v-if="isMessage" :title="title" :message="message"></message-component>
 
             <form class="ui form" @submit="registerUser">
@@ -80,5 +79,19 @@
 </script>
 
 <style scoped>
+    #registerwrapper {
+        padding-top: 13rem;
+    }
+    #register {
+        background-color: #F5FFFA;
+    }
+    #border {
+        
+        background-color: #F5FFFA;
+        width: 50%;
+        border: 2px solid lightgray;
+        border-radius: 1rem;
+
+    }
 
 </style>
