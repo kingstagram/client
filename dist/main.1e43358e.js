@@ -11280,9 +11280,6 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
 var _default = {
   name: 'mainNavbarcomponent',
   data: function data() {
@@ -11311,47 +11308,24 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "ui pointing menu" },
-      [
-        _c("a", { staticClass: "item active" }, [
-          _vm._v("\n            Home\n        ")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "item" }, [
-          _c("i", { staticClass: "user link icon" }),
-          _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "sui-popup",
-          {
-            attrs: {
-              basic: "",
-              content:
-                "The default theme's basic popup removes the pointing arrow."
-            }
-          },
-          [
-            _c("sui-button", {
-              attrs: { slot: "trigger", icon: "add" },
-              slot: "trigger"
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("a", { staticClass: "item", on: { click: _vm.logout } }, [
-          _vm._v("\n            Logout\n        ")
-        ])
-      ],
-      1
-    )
+    _c("div", { staticClass: "ui pointing menu" }, [
+      _c("a", { staticClass: "item active" }, [
+        _vm._v("\n            Home\n        ")
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "item" }, [
+        _c("i", { staticClass: "user link icon" }),
+        _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("a", { staticClass: "item", on: { click: _vm.logout } }, [
+        _vm._v("\n            Logout\n        ")
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -11513,8 +11487,7 @@ var _default = {
         method: 'get',
         url: "".concat(url, "//comments/add/").concat(id),
         headers: {
-          token: localStorage.getItem('token') // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-
+          token: localStorage.getItem('token')
         },
         data: {
           content: document.getElementById('comment-input')
@@ -11658,7 +11631,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -11682,7 +11659,34 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: "addPostingComponent"
+  name: "addPostingComponent",
+  data: function data() {
+    return {
+      caption: null
+    };
+  },
+  methods: {
+    postIt: function postIt(e) {
+      e.preventDefault();
+      var formData = new FormData();
+      var imagefile = document.querySelector('#file');
+      formData.append("image", imagefile.files[0]);
+
+      _axios.default.post('http://104.198.195.12/posts/add', {
+        caption: this.caption,
+        imageUrl: formData
+      }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    file: function file() {}
+  }
 };
 exports.default = _default;
         var $498ee5 = exports.default || module.exports;
@@ -11698,30 +11702,34 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ui form" }, [
-    _c("form", { staticClass: "ui form", on: { submit: _vm.login } }, [
-      _c("div", { staticClass: "ui grid" }, [
+    _c("form", { staticClass: "ui form", on: { submit: _vm.postIt } }, [
+      _c("div", { staticClass: "ui menu" }, [
+        _c("div", { staticClass: "item" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.caption,
+                expression: "caption"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Caption", size: "50" },
+            domProps: { value: _vm.caption },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.caption = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "four wide column" }, [
-          _c(
-            "button",
-            {
-              staticClass: "ui black labeled icon button",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.register($event)
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "user icon" }),
-              _vm._v("\n                    Post it !\n                ")
-            ]
-          )
-        ])
+        _vm._m(1)
       ])
     ])
   ])
@@ -11731,11 +11739,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "three wide column" }, [
-      _c("label", [_vm._v("Caption")]),
+    return _c("div", { staticClass: "item" }, [
+      _c("label", [_vm._v("Image")]),
       _vm._v(" "),
       _c("input", {
-        attrs: { type: "text", placeholder: "Caption", size: "50" }
+        attrs: {
+          id: "file",
+          type: "file",
+          placeholder: "Image",
+          accept: ".gif,.jpg,.jpeg,.png"
+        }
       })
     ])
   },
@@ -11743,16 +11756,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "four wide column" }, [
-      _c("label", [_vm._v("Image")]),
-      _vm._v(" "),
-      _c("input", {
-        attrs: {
-          type: "file",
-          placeholder: "Image",
-          accept: ".gif,.jpg,.jpeg,.png"
-        }
-      })
+    return _c("div", { staticClass: "item" }, [
+      _c(
+        "button",
+        {
+          staticClass: "ui black labeled icon button",
+          attrs: { type: "submit" }
+        },
+        [
+          _c("i", { staticClass: "user icon" }),
+          _vm._v("\n                    Post it !\n                ")
+        ]
+      )
     ])
   }
 ]
@@ -11788,7 +11803,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/mainContainerComponent.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/mainContainerComponent.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
