@@ -1,9 +1,9 @@
 <template lang="html">
-    <div class="page-login">
+    <div class="page-login" id="login">
         <!--        register component here-->
         <register-component v-if="isRegister" @backtohome="backtohome"></register-component>
         <div class="ui centered grid container" v-if="isLogin">
-            <div class="nine wide column">
+            <div class="nine wide column animated pulse">
                 <!--                message component here-->
                 <message-component v-if="isMessage" :title="title" :message="message"></message-component>
                 <div class="ui fluid card">
@@ -89,6 +89,9 @@
 </script>
 
 <style scoped>
+    #login {
+        padding-top: 13rem;
+    }
     body {
         background-color: #ECF0F1;
     }

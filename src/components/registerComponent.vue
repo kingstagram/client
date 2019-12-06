@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="ui centered grid container" >
+    <div class="ui centered grid container animated pulse" >
 
         <div class="nine wide column" id="border">
 <!--            message here-->
@@ -81,8 +81,7 @@
 
 <style scoped>
     #registerwrapper {
-        padding-top: 10px;
-        /* padding-bottom:  */
+        padding-top: 13rem;
     }
     #border {
         width: 50%;
