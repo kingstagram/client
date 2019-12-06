@@ -4,8 +4,8 @@
         <div class="ui centered grid container" id="header">
             <h2 class="ui header">
             <div class="content">
-                <i class="fas fa-camera-retro fa-lg"></i>
-                <span>KINGSTAGRAM</span>
+                <i class="fas fa-camera-retro fa-lg animated infinite heartBeat" id="brand"></i>
+                <span>Kingstagram</span>
             </div>
             </h2>
         </div>
@@ -98,8 +98,13 @@
 </script>
 
 <style scoped>
+    #brand {
+        color: #0074D9
+    }
     span {
+        margin-left: 1rem;
         font-family: 'Lobster', cursive !important;
+        color: #001f3f
     }
     #header {
         padding-bottom: 25px;
