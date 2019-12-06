@@ -21,7 +21,7 @@
             mainContainerComponent
         },
         mounted(){
-            if (document.cookie){
+            if (localStorage.token && localStorage.username){
                 this.isLogin = true;
             } else {
                 this.isLogin = false;

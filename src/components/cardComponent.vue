@@ -2,10 +2,10 @@
     <div class="ui card">
         <div class="content">
             <div class="right floated meta">14h</div>
-<!--            <img class="ui avatar image" src="/images/avatar/large/elliot.jpg"> Elliot-->
+            <img class="ui avatar image" src="../../assets/elliot.jpg"> Elliot
         </div>
         <div class="image">
-            <img>
+            <img src="../../assets/image.png">
         </div>
         <div class="content">
     <span class="right floated">
@@ -26,7 +26,8 @@
 
 <script>
     export default {
-        data: function () {
+        name: 'cardComponent',
+        data () {
             return {
             }
         }

@@ -55,7 +55,7 @@
                 e.preventDefault();
                 axios({
                     method: 'post',
-                    url: 'http://localhost:3000/users/register',
+                    url: 'http://104.198.195.12/users/register',
                     data: {
                         username: this.username,
                         password: this.password,
@@ -64,6 +64,9 @@
                 }).then(response => {
                     this.message = "User successfully created";
                     this.isMessage = true;
+                    localStorage.token = response.data.token;
+                    localStorage.username = response.data.username;
+                    location.reload();
                 }).catch(err => {
                     this.message = err;
                     this.isMessage = true;
