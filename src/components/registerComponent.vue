@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="ui centered grid container">
+    <div class="ui centered grid container" class="border">
 
         <div class="nine wide column">
 <!--            message here-->
@@ -80,5 +80,5 @@
 </script>
 
 <style scoped>
-
+    
 </style>
