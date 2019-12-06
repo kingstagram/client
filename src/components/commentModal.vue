@@ -28,7 +28,7 @@
 
 <script>
 export default {
-    name: commentModal,
+    name: 'commentModal',
     data: function() {
             return {
                 comments: []

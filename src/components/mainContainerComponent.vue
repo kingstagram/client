@@ -37,7 +37,7 @@
         components: {
             mainNavbarComponent,
             cardComponent,
-            addPostingComponent
+            addPostingComponent,
             userProfile
         },
         methods: {
