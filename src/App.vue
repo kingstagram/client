@@ -1,7 +1,7 @@
 <template>
     <div>
         <login-component v-if="!isLogin"></login-component>
-        <main-container-component v-if="isLogin"></main-container-component>
+        <main-container-component class="animated fadeInDown" v-if="isLogin"></main-container-component>
     </div>
 </template>
 
