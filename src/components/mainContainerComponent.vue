@@ -2,6 +2,9 @@
     <div class="ui container">
         <main-navbar-component></main-navbar-component>
         <div class="ui segment">
+            <add-posting-component></add-posting-component>
+        </div>
+        <div class="ui segment">
             <p>
                 <card-component></card-component>
             </p>
@@ -12,12 +15,14 @@
 <script>
     import mainNavbarComponent from "./mainNavbarComponent";
     import cardComponent from "./cardComponent";
+    import addPostingComponent from "./addPostingComponent";
 
     export default {
         name: "mainContainerComponent",
         components: {
             mainNavbarComponent,
-            cardComponent
+            cardComponent,
+            addPostingComponent
         }
     }
 </script>
