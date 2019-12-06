@@ -15,7 +15,7 @@
         </div>
         <div class="content">
             <span class="right floated">
-            <i class="heart outline like icon"></i>
+            <i class="heart outline like icon" @click="likePost(post._id)"></i>
             {{post.likes.length}}
             </span>
             <div @click="viewComment(post._id)">
@@ -28,7 +28,7 @@
             <div class="ui large transparent left icon input">
                 <form>
                 <i class="heart outline icon"></i>
-                <input type="text" placeholder="Add Comment...">
+                <input @keyup.enter="addComment(post._id)" type="text" id="comment-input" placeholder="Add Comment...">
                 </form>
             </div>
         </div>
@@ -67,14 +67,45 @@
                     this.message = err;
                     this.isMessage = true;
                 });
-                // this.$emit('readComment', id)
             },
-            likePost: function() {
-
+            likePost: function(id) {
+                axios({
+                    method: 'put',
+                    url: `http://localhost:3000/posts/like/${id}`,
+                    headers: {
+                        // token: localStorage.getItem('token')
+                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+                    }
+                }).then(response => {
+                    // console.log('masuk')
+                    this.$emit('like')
+                }).catch(err => {
+                    this.message = err;
+                    this.isMessage = true;
+                });
+            },
+            addComment: function(id) {
+                axios({
+                    method: 'get',
+                    url: `http://localhost:3000/comments/add/${id}`,
+                    headers: {
+                        // token: localStorage.getItem('token')
+                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+                    },
+                    data: {
+                        content: document.getElementById('comment-input')
+                    }
+                }).then(response => {
+                    console.log('masuk')
+                    this.$emit('add-comment')
+                }).catch(err => {
+                    this.message = err;
+                    this.isMessage = true;
+                });
             }
         },
         components: {
-            // messageComponent
+            commentModal
         }
     }
 </script>

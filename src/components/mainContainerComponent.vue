@@ -6,6 +6,8 @@
                 <card-component v-for="post in posts"
                                 :key="post._id"
                                 :post="post"
+                                @like="getPosts"
+                                @add-comment="getPosts"
                 ></card-component>
             </p>
             <user-profile></user-profile>
@@ -35,8 +37,9 @@
         },
         methods: {
             getPosts: function(){
+                alert('masuk sini')
                 axios({
-                    method: 'get',
+                    // method: 'get',
                     url: 'http://localhost:3000/posts/all',
                     headers: {
                         // token: localStorage.getItem('token')

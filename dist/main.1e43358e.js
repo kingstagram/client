@@ -11367,7 +11367,141 @@ render._withStripped = true
         
       }
     })();
-},{"vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/cardComponent.vue":[function(require,module,exports) {
+},{"vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/commentModal.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: commentModal,
+  data: function data() {
+    return {
+      comments: []
+    };
+  },
+  props: ['comments'],
+  methods: {
+    viewModal: function viewModal() {// this.$emit('comments')
+    }
+  },
+  components: {},
+  created: function created() {// this.viewModal()
+  }
+};
+exports.default = _default;
+        var $6fe6ef = exports.default || module.exports;
+      
+      if (typeof $6fe6ef === 'function') {
+        $6fe6ef = $6fe6ef.options;
+      }
+    
+        /* template */
+        Object.assign($6fe6ef, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ui basic modal" }, [
+    _c("div", { staticClass: "content" }, [
+      _c(
+        "div",
+        { staticClass: "ui comments" },
+        [
+          _c("h3", { staticClass: "ui dividing header" }, [_vm._v("Comments")]),
+          _vm._v(" "),
+          _vm._l(_vm.comments, function(comment) {
+            return _c(
+              "div",
+              {
+                key: comment._id,
+                staticClass: "comment",
+                attrs: { comments: _vm.comments }
+              },
+              [
+                _c("a", { staticClass: "avatar" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "content" }, [
+                  _c("a", { staticClass: "author" }, [
+                    _vm._v(" " + _vm._s(comment.userId) + " ")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text" }, [
+                    _vm._v("\n      " + _vm._s(comment.content) + "\n    ")
+                  ])
+                ])
+              ]
+            )
+          })
+        ],
+        2
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$6fe6ef', $6fe6ef);
+          } else {
+            api.reload('$6fe6ef', $6fe6ef);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/cardComponent.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11376,6 +11510,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _commentModal = _interopRequireDefault(require("./commentModal"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11445,11 +11581,51 @@ var _default = {
       }).catch(function (err) {
         _this.message = err;
         _this.isMessage = true;
-      }); // this.$emit('readComment', id)
+      });
     },
-    likePost: function likePost() {}
+    likePost: function likePost(id) {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        method: 'put',
+        url: "http://localhost:3000/posts/like/".concat(id),
+        headers: {
+          // token: localStorage.getItem('token')
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+        }
+      }).then(function (response) {
+        // console.log('masuk')
+        _this2.$emit('like');
+      }).catch(function (err) {
+        _this2.message = err;
+        _this2.isMessage = true;
+      });
+    },
+    addComment: function addComment(id) {
+      var _this3 = this;
+
+      (0, _axios.default)({
+        method: 'get',
+        url: "http://localhost:3000/comments/add/".concat(id),
+        headers: {
+          // token: localStorage.getItem('token')
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+        },
+        data: {
+          content: document.getElementById('comment-input')
+        }
+      }).then(function (response) {
+        console.log('masuk');
+
+        _this3.$emit('add-comment');
+      }).catch(function (err) {
+        _this3.message = err;
+        _this3.isMessage = true;
+      });
+    }
   },
-  components: {// messageComponent
+  components: {
+    commentModal: _commentModal.default
   }
 };
 exports.default = _default;
@@ -11482,7 +11658,14 @@ exports.default = _default;
     _vm._v(" "),
     _c("div", { staticClass: "content" }, [
       _c("span", { staticClass: "right floated" }, [
-        _c("i", { staticClass: "heart outline like icon" }),
+        _c("i", {
+          staticClass: "heart outline like icon",
+          on: {
+            click: function($event) {
+              return _vm.likePost(_vm.post._id)
+            }
+          }
+        }),
         _vm._v("\n        " + _vm._s(_vm.post.likes.length) + "\n        ")
       ]),
       _vm._v(" "),
@@ -11499,27 +11682,35 @@ exports.default = _default;
       )
     ]),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "extra content" }, [
+    _c("div", { staticClass: "extra content" }, [
       _c("div", { staticClass: "ui large transparent left icon input" }, [
         _c("form", [
           _c("i", { staticClass: "heart outline icon" }),
           _vm._v(" "),
           _c("input", {
-            attrs: { type: "text", placeholder: "Add Comment..." }
+            attrs: {
+              type: "text",
+              id: "comment-input",
+              placeholder: "Add Comment..."
+            },
+            on: {
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.addComment(_vm.post._id)
+              }
+            }
           })
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
           return {
@@ -11552,7 +11743,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/userProfile.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./commentModal":"src/components/commentModal.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/userProfile.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11710,6 +11901,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 var _default = {
   name: "mainContainerComponent",
   data: function data() {
@@ -11728,8 +11921,9 @@ var _default = {
     getPosts: function getPosts() {
       var _this = this;
 
+      alert('masuk sini');
       (0, _axios.default)({
-        method: 'get',
+        // method: 'get',
         url: 'http://localhost:3000/posts/all',
         headers: {
           // token: localStorage.getItem('token')
@@ -11776,7 +11970,8 @@ exports.default = _default;
             _vm._l(_vm.posts, function(post) {
               return _c("card-component", {
                 key: post._id,
-                attrs: { post: post }
+                attrs: { post: post },
+                on: { like: _vm.getPosts, "add-comment": _vm.getPosts }
               })
             }),
             1
@@ -11963,7 +12158,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43541" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41545" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
