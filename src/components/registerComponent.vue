@@ -1,7 +1,7 @@
 <template lang="html">
-    <div class="ui centered grid container" class="border">
+    <div class="ui centered grid container" >
 
-        <div class="nine wide column">
+        <div class="nine wide column" id="border">
 <!--            message here-->
             <message-component v-if="isMessage" :title="title" :message="message"></message-component>
 
@@ -80,5 +80,16 @@
 </script>
 
 <style scoped>
-    
+    #registerwrapper {
+        padding-top: 10px;
+        /* padding-bottom:  */
+    }
+    #border {
+        width: 50%;
+        border: 1px solid lightgray;
+        border-radius: 1rem;
+        padding: 25px;
+
+    }
+
 </style>
