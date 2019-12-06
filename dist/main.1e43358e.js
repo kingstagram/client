@@ -11277,6 +11277,12 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'mainNavbarcomponent',
   data: function data() {
@@ -11305,25 +11311,60 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "ui pointing menu" }, [
-      _c("a", { staticClass: "item active" }, [
-        _vm._v("\n            Home\n        ")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "item" }, [
-        _c("i", { staticClass: "user link icon" }),
-        _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("a", { staticClass: "item", on: { click: _vm.logout } }, [
-        _vm._v("\n            Logout\n        ")
-      ])
-    ])
+    _c(
+      "div",
+      { staticClass: "ui pointing menu" },
+      [
+        _c("a", { staticClass: "item active" }, [
+          _vm._v("\n            Home\n        ")
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "item" }, [
+          _c("i", { staticClass: "user link icon" }),
+          _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c(
+          "sui-popup",
+          {
+            attrs: {
+              basic: "",
+              content:
+                "The default theme's basic popup removes the pointing arrow."
+            }
+          },
+          [
+            _c("sui-button", {
+              attrs: { slot: "trigger", icon: "add" },
+              slot: "trigger"
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("a", { staticClass: "item", on: { click: _vm.logout } }, [
+          _vm._v("\n            Logout\n        ")
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "item", attrs: { "data-content": "Add New Post" } },
+      [_c("i", { staticClass: "plus link icon" })]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -11743,7 +11784,144 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./commentModal":"src/components/commentModal.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/userProfile.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./commentModal":"src/components/commentModal.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/addPostingComponent.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "addPostingComponent"
+};
+exports.default = _default;
+        var $2b5441 = exports.default || module.exports;
+      
+      if (typeof $2b5441 === 'function') {
+        $2b5441 = $2b5441.options;
+      }
+    
+        /* template */
+        Object.assign($2b5441, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ui form" }, [
+    _c("form", { staticClass: "ui form", on: { submit: _vm.login } }, [
+      _c("div", { staticClass: "ui grid" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "four wide column" }, [
+          _c(
+            "button",
+            {
+              staticClass: "ui black labeled icon button",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.register($event)
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "user icon" }),
+              _vm._v("\n                    Post it !\n                ")
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "three wide column" }, [
+      _c("label", [_vm._v("Caption")]),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "text", placeholder: "Caption", size: "50" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "four wide column" }, [
+      _c("label", [_vm._v("Image")]),
+      _vm._v(" "),
+      _c("input", {
+        attrs: {
+          type: "file",
+          placeholder: "Image",
+          accept: ".gif,.jpg,.jpeg,.png"
+        }
+      })
+    ])
+  }
+]
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: "data-v-2b5441",
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$2b5441', $2b5441);
+          } else {
+            api.reload('$2b5441', $2b5441);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/userProfile.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11882,10 +12060,15 @@ var _mainNavbarComponent = _interopRequireDefault(require("./mainNavbarComponent
 
 var _cardComponent = _interopRequireDefault(require("./cardComponent"));
 
+var _addPostingComponent = _interopRequireDefault(require("./addPostingComponent"));
+
 var _userProfile = _interopRequireDefault(require("./userProfile"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
 //
 //
 //
@@ -11915,6 +12098,7 @@ var _default = {
   components: {
     mainNavbarComponent: _mainNavbarComponent.default,
     cardComponent: _cardComponent.default,
+    addPostingComponent: _addPostingComponent.default,
     userProfile: _userProfile.default
   },
   methods: {
@@ -11960,6 +12144,13 @@ exports.default = _default;
     { staticClass: "ui container" },
     [
       _c("main-navbar-component"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "ui segment" },
+        [_c("add-posting-component")],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -12018,7 +12209,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./mainNavbarComponent":"src/components/mainNavbarComponent.vue","./cardComponent":"src/components/cardComponent.vue","./userProfile":"src/components/userProfile.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./mainNavbarComponent":"src/components/mainNavbarComponent.vue","./cardComponent":"src/components/cardComponent.vue","./addPostingComponent":"src/components/addPostingComponent.vue","./userProfile":"src/components/userProfile.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12123,8 +12314,6 @@ var _App = _interopRequireDefault(require("./App.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import SuiVue from 'semantic-ui-vue';
-// Vue.use(SuiVue);
 new _vue.default({
   render: function render(h) {
     return h(_App.default);
@@ -12158,7 +12347,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41545" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36103" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,3 +4,6 @@ body[data-v-eb8ef2] {
 .page-login[data-v-eb8ef2] {
     margin-top: 25px;
 }
+.form[data-v-2b5441], .ui[data-v-2b5441]{
+    border: none
+}
