@@ -1,12 +1,21 @@
 <template lang="html">
-    <div class="page-login">
+    <div class="page-login" id="login">
+        <!-- HEADER -->
+        <div class="ui centered grid container" id="header">
+            <h2 class="ui header">
+            <div class="content">
+                <i class="fas fa-camera-retro fa-lg animated infinite heartBeat" id="brand"></i>
+                <span>Kingstagram</span>
+            </div>
+            </h2>
+        </div>
         <!--        register component here-->
         <register-component v-if="isRegister" @backtohome="backtohome"></register-component>
         <div class="ui centered grid container" v-if="isLogin">
-            <div class="nine wide column">
+            <div class="nine wide column animated pulse">
                 <!--                message component here-->
                 <message-component v-if="isMessage" :title="title" :message="message"></message-component>
-                <div class="ui fluid card">
+                <div class="ui fluid card" id="form">
                     <div class="content">
                         <form class="ui form" @submit="login">
                             <div class="field">
@@ -89,6 +98,26 @@
 </script>
 
 <style scoped>
+    #brand {
+        color: #0074D9
+    }
+    span {
+        margin-left: 1rem;
+        font-family: 'Lobster', cursive !important;
+        color: #001f3f
+    }
+    #header {
+        padding-bottom: 25px;
+    }
+    #form {
+        background-color: #F5FFFA;
+        border: 1px solid lightgray;
+        border-radius: 1rem;
+        padding: 25px;
+    }
+    #login {
+        padding-top: 10rem;
+    }
     body {
         background-color: #ECF0F1;
     }
