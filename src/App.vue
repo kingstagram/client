@@ -1,14 +1,25 @@
 <template>
-    <h1>{{ message }}</h1>
+    <div>
+        <!-- <p>tes</p> -->
+        <!-- <h1>{{ message }}</h1> -->
+        <photo-list></photo-list>
+        <!-- <login-component></login-component> -->
+    </div>
 </template>
 
 <script>
+    import loginComponent from "./components/loginComponent";
+    import photoList from "./components/photoList";
+
     export default {
-        data: function() {
+        data: function () {
             return {
-                message: 'Hello world',
-            };
+            }
         },
+        components: {
+            loginComponent,
+            photoList,
+        }
     };
 </script>
 
