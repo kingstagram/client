@@ -1,14 +1,14 @@
 <template>
-<!-- tap to share -->
     <div class="ui card">
         <div class="content">
-            <!-- <div class="right floated meta">
-                {{post.time}}
-            </div> -->
-            <img class="ui avatar image" :src="post.avatar"> {{post.username}}
+            <!-- tap to share button -->
+            <div class="right floated meta">14h</div>
+            <!-- change to avatar -->
+            <!-- <img class="ui avatar image" v-bind:src="post.useravatar"> -->
+            {{ username }}
         </div>
         <div class="image">
-            <img :src="post.photoUrl">
+            <img v-bind:src="post.imageUrl">
         </div>
         <div class="content">
             {{post.caption}}
@@ -16,16 +16,20 @@
         <div class="content">
             <span class="right floated">
             <i class="heart outline like icon"></i>
-            {{post.likes}}
+            {{post.likes.length}}
             </span>
-            <i class="comment icon"></i>
-            {{post.comments}}
+            <div @click="viewComment(post._id)">
+                <i class="comment icon"></i>
+                <!-- {{post.comments}} -->
+            </div>
         </div>
         <div class="extra content">
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="viewComment(post._id)">View/add comment</button>
+            <!-- <button type="button" class="btn btn-outline-primary btn-sm">View comment</button> -->
             <div class="ui large transparent left icon input">
+                <form>
                 <i class="heart outline icon"></i>
                 <input type="text" placeholder="Add Comment...">
+                </form>
             </div>
         </div>
     </div>
@@ -33,17 +37,37 @@
 
 <script>
     import axios from 'axios';
+    import commentModal from "./commentModal";
 
     export default {
-        name: "cardComponent",
-        data: function () {
+        name: 'cardComponent',
+        data () {
             return {
-                showComment: false
+                showComment: false,
+                comments: [],
+                message: '',
+                isMessage: false,
+                username: localStorage.getItem('username')
             }
         },
+        props: ['post'],
         methods: {
             viewComment: function(id) {
-                this.$emit('readComment', id)
+                axios({
+                    method: 'get',
+                    url: `http://localhost:3000/comments/all/${id}`,
+                    headers: {
+                        // token: localStorage.getItem('token')
+                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+                    }
+                }).then(response => {
+                    console.log('masuk')
+                    this.comments = response.data
+                }).catch(err => {
+                    this.message = err;
+                    this.isMessage = true;
+                });
+                // this.$emit('readComment', id)
             },
             likePost: function() {
 

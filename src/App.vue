@@ -1,24 +1,31 @@
 <template>
     <div>
-        <!-- <p>tes</p> -->
-        <!-- <h1>{{ message }}</h1> -->
-        <photo-list></photo-list>
-        <!-- <login-component></login-component> -->
+        <login-component v-if="!isLogin"></login-component>
+        <main-container-component v-if="isLogin"></main-container-component>
     </div>
 </template>
 
 <script>
     import loginComponent from "./components/loginComponent";
-    import photoList from "./components/photoList";
+    import mainContainerComponent from "./components/mainContainerComponent";
 
     export default {
         data: function () {
             return {
-            }
+                cookies: document.cookie,
+                isLogin: false
+            };
         },
         components: {
             loginComponent,
-            photoList,
+            mainContainerComponent
+        },
+        mounted(){
+            if (localStorage.token && localStorage.username){
+                this.isLogin = true;
+            } else {
+                this.isLogin = false;
+            }
         }
     };
 </script>
