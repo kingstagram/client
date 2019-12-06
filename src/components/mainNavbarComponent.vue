@@ -8,9 +8,6 @@
                 <i class="user link icon"></i>
                 {{ username }}
             </a>
-            <sui-popup basic content="The default theme's basic popup removes the pointing arrow.">
-                <sui-button icon="add" slot="trigger" />
-            </sui-popup>
             <a class="item" data-content="Add New Post">
                 <i class="plus link icon"></i>
             </a>

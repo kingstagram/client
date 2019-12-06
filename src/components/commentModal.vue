@@ -1,54 +1,88 @@
 <template>
-  <div class="ui basic modal">
-    <div class="content">
-      <div class="ui comments">
-  <h3 class="ui dividing header">Comments</h3>
-  
-  <div class="comment" v-for="comment in comments"
-                                :key="comment._id"
-                                :comments="comments">
-    <a class="avatar">
-      <!-- <img src="/images/avatar/small/matt.jpg"> -->
-    </a>
-    <div class="content">
-      <a class="author"> {{ comment.userId }} </a>
-      <!-- <div class="metadata">
-        <span class="date">Today at 5:42PM</span>
-      </div> -->
-      <div class="text">
-        {{ comment.content }}
+  <div>
+    <form class="ui reply form" @submit.prevent="addComment">
+      <div class="field">
+        <input type="text" v-model="content" />
       </div>
-    </div>
-
-  </div>
-  </div>
+    </form>
+    <div class="ui comments">
+      <div class="comment">
+        <div class="content" v-for="comment in comments" :key="comment._id">
+          <!-- <a class="author">{{ comment.userId.username }}</a> -->
+          <div class="metadata">
+            <span class="date"> {{ comment.content }} </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-    name: 'commentModal',
-    data: function() {
-            return {
-                comments: []
-            };
-        },
-    props: ['comments'],
-    methods: {
-        viewModal: function() {
-          // this.$emit('comments')
+  name: "commentModal",
+  data: function() {
+    return {
+      comments: [],
+      content: ""
+    };
+  },
+  props: ["id"],
+  methods: {
+    getComments: function() {
+      axios({
+        method: "get",
+        url: `http://104.198.195.12/comments/all/${this.id}`,
+        headers: {
+          token: localStorage.getItem("token")
+          //token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
         }
+      })
+        .then(response => {
+          console.log("comments masuk");
+          this.comments = response.data;
+        })
+        .catch(err => {
+          this.message = err;
+          this.isMessage = true;
+        });
+      // this.$emit('comments')
     },
-    components: {
-        
+    addComment: function() {
+      // alert("masuk comment");
+      // console.log(this.id);
+      axios({
+        method: "post",
+        url: `http://104.198.195.12/comments/add/${this.id}`,
+        headers: {
+          token: localStorage.getItem("token")
+          // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+        },
+        data: {
+          content: this.content
+        }
+      })
+        .then(response => {
+          // console.log("masuk");
+          this.getComments();
+          this.content = "";
+        })
+        .catch(err => {
+          this.message = err;
+          this.isMessage = true;
+        });
     },
-    created() {
-        // this.viewModal()
+    getId(id) {
+      this.id = id;
     }
-}
+  },
+  components: {},
+  created() {
+    this.getComments();
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
