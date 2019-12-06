@@ -55,7 +55,7 @@
                 e.preventDefault();
                 axios({
                     method: 'post',
-                    url: 'http://localhost:3000/users/register',
+                    url: 'http://104.198.195.12/users/register',
                     data: {
                         username: this.username,
                         password: this.password,

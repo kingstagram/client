@@ -64,7 +64,7 @@
                 e.preventDefault()
                 axios({
                     method: 'post',
-                    url: 'http://localhost:3000/users/login',
+                    url: 'http://104.198.195.12/users/login',
                     data: {
                         email: this.email,
                         password: this.password
