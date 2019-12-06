@@ -2,6 +2,9 @@
     <div class="ui container">
         <main-navbar-component></main-navbar-component>
         <div class="ui segment">
+            <add-posting-component></add-posting-component>
+        </div>
+        <div class="ui segment">
             <p>
                 <card-component v-for="post in posts"
                                 :key="post._id"
@@ -19,8 +22,9 @@
     import axios from 'axios';
     import mainNavbarComponent from "./mainNavbarComponent";
     import cardComponent from "./cardComponent";
+    import addPostingComponent from "./addPostingComponent";
     import userProfile from "./userProfile";
-
+    
     export default {
         name: "mainContainerComponent",
                 data () {
@@ -33,6 +37,7 @@
         components: {
             mainNavbarComponent,
             cardComponent,
+            addPostingComponent
             userProfile
         },
         methods: {
