@@ -1,6 +1,16 @@
-body[data-v-eb8ef2] {
+body[data-v-33bc2e] {
     background-color: #ECF0F1;
 }
-.page-login[data-v-eb8ef2] {
+.page-login[data-v-33bc2e] {
     margin-top: 25px;
+}
+.card[data-v-4c4a06] {
+    max-width: 19em;
+    margin: 5px;
+}
+.form[data-v-498ee5], .ui[data-v-498ee5] {
+    border: none
+}
+.column[data-v-d6cfe7]{
+    margin: 5px;
 }
