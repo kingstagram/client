@@ -39,7 +39,7 @@
             getPosts: function(){
                 alert('masuk sini')
                 axios({
-                    // method: 'get',
+                    method: 'get',
                     url: 'http://localhost:3000/posts/all',
                     headers: {
                         // token: localStorage.getItem('token')

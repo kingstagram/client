@@ -1,37 +1,37 @@
 <template>
     <div class="ui card">
-        <div class="content">
-            <!-- tap to share button -->
+       <div class="content">
             <div class="right floated meta">14h</div>
-            <!-- change to avatar -->
-            <!-- <img class="ui avatar image" v-bind:src="post.useravatar"> -->
+            <img class="ui avatar image" v-bind:src="post.userId.profileImage">
             {{ username }}
         </div>
         <div class="image">
             <img v-bind:src="post.imageUrl">
         </div>
         <div class="content">
-            {{post.caption}}
+            {{ post.caption }}
         </div>
         <div class="content">
             <span class="right floated">
             <i class="heart outline like icon" @click="likePost(post._id)"></i>
             {{post.likes.length}}
             </span>
-            <div @click="viewComment(post._id)">
-                <i class="comment icon"></i>
-                <!-- {{post.comments}} -->
+            <div>
+                <i class="comment icon" @click="toggleModal"></i>
+                 {{post.comments}}
             </div>
+                <comment-modal :id="post._id" v-if="showModal"></comment-modal>
         </div>
-        <div class="extra content">
+        <!-- <div class="extra content"> -->
             <!-- <button type="button" class="btn btn-outline-primary btn-sm">View comment</button> -->
-            <div class="ui large transparent left icon input">
+            <!-- <div class="ui large transparent left icon input">
                 <form>
                 <i class="heart outline icon"></i>
                 <input @keyup.enter="addComment(post._id)" type="text" id="comment-input" placeholder="Add Comment...">
                 </form>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
+
     </div>
 </template>
 
@@ -43,8 +43,8 @@
         name: 'cardComponent',
         data () {
             return {
-                showComment: false,
-                comments: [],
+                showModal: true,
+                id: '',
                 message: '',
                 isMessage: false,
                 username: localStorage.getItem('username')
@@ -52,22 +52,6 @@
         },
         props: ['post'],
         methods: {
-            viewComment: function(id) {
-                axios({
-                    method: 'get',
-                    url: `http://localhost:3000/comments/all/${id}`,
-                    headers: {
-                        // token: localStorage.getItem('token')
-                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-                    }
-                }).then(response => {
-                    console.log('masuk')
-                    this.comments = response.data
-                }).catch(err => {
-                    this.message = err;
-                    this.isMessage = true;
-                });
-            },
             likePost: function(id) {
                 axios({
                     method: 'put',
@@ -84,24 +68,12 @@
                     this.isMessage = true;
                 });
             },
-            addComment: function(id) {
-                axios({
-                    method: 'get',
-                    url: `http://localhost:3000/comments/add/${id}`,
-                    headers: {
-                        // token: localStorage.getItem('token')
-                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-                    },
-                    data: {
-                        content: document.getElementById('comment-input')
-                    }
-                }).then(response => {
-                    console.log('masuk')
-                    this.$emit('add-comment')
-                }).catch(err => {
-                    this.message = err;
-                    this.isMessage = true;
-                });
+            toggleModal: function() {
+                if (this.showModal) {
+                    this.showModal = false
+                } else {
+                    this.showModal = true
+                }
             }
         },
         components: {

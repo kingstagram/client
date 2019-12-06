@@ -11374,11 +11374,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
-//
-//
-//
-//
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -11403,19 +11403,66 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: commentModal,
+  name: "commentModal",
   data: function data() {
     return {
-      comments: []
+      comments: [],
+      content: ''
     };
   },
-  props: ['comments'],
+  props: ['id'],
   methods: {
-    viewModal: function viewModal() {// this.$emit('comments')
+    getComments: function getComments() {
+      var _this = this;
+
+      (0, _axios.default)({
+        method: 'get',
+        url: "http://localhost:3000/comments/all/".concat(this.id),
+        headers: {
+          // token: localStorage.getItem('token')
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+        }
+      }).then(function (response) {
+        console.log('comments masuk');
+        _this.comments = response.data;
+      }).catch(function (err) {
+        _this.message = err;
+        _this.isMessage = true;
+      }); // this.$emit('comments')
+    },
+    addComment: function addComment() {
+      var _this2 = this;
+
+      alert('masuk comment');
+      console.log(this.id);
+      (0, _axios.default)({
+        method: 'post',
+        url: "http://localhost:3000/comments/add/".concat(this.id),
+        headers: {
+          // token: localStorage.getItem('token')
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+        },
+        data: {
+          content: this.content
+        }
+      }).then(function (response) {
+        console.log('masuk');
+
+        _this2.getComments();
+
+        _this2.content = '';
+      }).catch(function (err) {
+        _this2.message = err;
+        _this2.isMessage = true;
+      });
+    },
+    getId: function getId(id) {
+      this.id = id;
     }
   },
   components: {},
-  created: function created() {// this.viewModal()
+  created: function created() {
+    this.getComments();
   }
 };
 exports.default = _default;
@@ -11431,39 +11478,62 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ui basic modal" }, [
-    _c("div", { staticClass: "content" }, [
+  return _c("div", [
+    _c(
+      "form",
+      {
+        staticClass: "ui reply form",
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addComment($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "field" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.content,
+                expression: "content"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.content },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.content = $event.target.value
+              }
+            }
+          })
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ui comments" }, [
       _c(
         "div",
-        { staticClass: "ui comments" },
-        [
-          _c("h3", { staticClass: "ui dividing header" }, [_vm._v("Comments")]),
-          _vm._v(" "),
-          _vm._l(_vm.comments, function(comment) {
-            return _c(
-              "div",
-              {
-                key: comment._id,
-                staticClass: "comment",
-                attrs: { comments: _vm.comments }
-              },
-              [
-                _c("a", { staticClass: "avatar" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "content" }, [
-                  _c("a", { staticClass: "author" }, [
-                    _vm._v(" " + _vm._s(comment.userId) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "text" }, [
-                    _vm._v("\n      " + _vm._s(comment.content) + "\n    ")
-                  ])
-                ])
-              ]
-            )
-          })
-        ],
-        2
+        { staticClass: "comment" },
+        _vm._l(_vm.comments, function(comment) {
+          return _c("div", { key: comment._id, staticClass: "content" }, [
+            _c("a", { staticClass: "author" }, [
+              _vm._v(_vm._s(comment.userId.username))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "metadata" }, [
+              _c("span", { staticClass: "date" }, [
+                _vm._v(" " + _vm._s(comment.content) + " ")
+              ])
+            ])
+          ])
+        }),
+        0
       )
     ])
   ])
@@ -11501,7 +11571,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/cardComponent.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/cardComponent.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11556,8 +11626,8 @@ var _default = {
   name: 'cardComponent',
   data: function data() {
     return {
-      showComment: false,
-      comments: [],
+      showModal: true,
+      id: '',
       message: '',
       isMessage: false,
       username: localStorage.getItem('username')
@@ -11565,26 +11635,8 @@ var _default = {
   },
   props: ['post'],
   methods: {
-    viewComment: function viewComment(id) {
-      var _this = this;
-
-      (0, _axios.default)({
-        method: 'get',
-        url: "http://localhost:3000/comments/all/".concat(id),
-        headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-        }
-      }).then(function (response) {
-        console.log('masuk');
-        _this.comments = response.data;
-      }).catch(function (err) {
-        _this.message = err;
-        _this.isMessage = true;
-      });
-    },
     likePost: function likePost(id) {
-      var _this2 = this;
+      var _this = this;
 
       (0, _axios.default)({
         method: 'put',
@@ -11595,33 +11647,18 @@ var _default = {
         }
       }).then(function (response) {
         // console.log('masuk')
-        _this2.$emit('like');
+        _this.$emit('like');
       }).catch(function (err) {
-        _this2.message = err;
-        _this2.isMessage = true;
+        _this.message = err;
+        _this.isMessage = true;
       });
     },
-    addComment: function addComment(id) {
-      var _this3 = this;
-
-      (0, _axios.default)({
-        method: 'get',
-        url: "http://localhost:3000/comments/add/".concat(id),
-        headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-        },
-        data: {
-          content: document.getElementById('comment-input')
-        }
-      }).then(function (response) {
-        console.log('masuk');
-
-        _this3.$emit('add-comment');
-      }).catch(function (err) {
-        _this3.message = err;
-        _this3.isMessage = true;
-      });
+    toggleModal: function toggleModal() {
+      if (this.showModal) {
+        this.showModal = false;
+      } else {
+        this.showModal = true;
+      }
     }
   },
   components: {
@@ -11645,6 +11682,10 @@ exports.default = _default;
     _c("div", { staticClass: "content" }, [
       _c("div", { staticClass: "right floated meta" }, [_vm._v("14h")]),
       _vm._v(" "),
+      _c("img", {
+        staticClass: "ui avatar image",
+        attrs: { src: _vm.post.userId.profileImage }
+      }),
       _vm._v("\n        " + _vm._s(_vm.username) + "\n    ")
     ]),
     _vm._v(" "),
@@ -11656,58 +11697,36 @@ exports.default = _default;
       _vm._v("\n        " + _vm._s(_vm.post.caption) + "\n    ")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "content" }, [
-      _c("span", { staticClass: "right floated" }, [
-        _c("i", {
-          staticClass: "heart outline like icon",
-          on: {
-            click: function($event) {
-              return _vm.likePost(_vm.post._id)
-            }
-          }
-        }),
-        _vm._v("\n        " + _vm._s(_vm.post.likes.length) + "\n        ")
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          on: {
-            click: function($event) {
-              return _vm.viewComment(_vm.post._id)
-            }
-          }
-        },
-        [_c("i", { staticClass: "comment icon" })]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "extra content" }, [
-      _c("div", { staticClass: "ui large transparent left icon input" }, [
-        _c("form", [
-          _c("i", { staticClass: "heart outline icon" }),
-          _vm._v(" "),
-          _c("input", {
-            attrs: {
-              type: "text",
-              id: "comment-input",
-              placeholder: "Add Comment..."
-            },
+    _c(
+      "div",
+      { staticClass: "content" },
+      [
+        _c("span", { staticClass: "right floated" }, [
+          _c("i", {
+            staticClass: "heart outline like icon",
             on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.addComment(_vm.post._id)
+              click: function($event) {
+                return _vm.likePost(_vm.post._id)
               }
             }
-          })
-        ])
-      ])
-    ])
+          }),
+          _vm._v("\n        " + _vm._s(_vm.post.likes.length) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("i", {
+            staticClass: "comment icon",
+            on: { click: _vm.toggleModal }
+          }),
+          _vm._v("\n             " + _vm._s(_vm.post.comments) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _vm.showModal
+          ? _c("comment-modal", { attrs: { id: _vm.post._id } })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -11923,7 +11942,7 @@ var _default = {
 
       alert('masuk sini');
       (0, _axios.default)({
-        // method: 'get',
+        method: 'get',
         url: 'http://localhost:3000/posts/all',
         headers: {
           // token: localStorage.getItem('token')
@@ -12158,7 +12177,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41545" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43081" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
