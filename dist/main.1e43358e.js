@@ -11280,9 +11280,6 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
 var _default = {
   name: 'mainNavbarcomponent',
   data: function data() {
@@ -11311,47 +11308,24 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "ui pointing menu" },
-      [
-        _c("a", { staticClass: "item active" }, [
-          _vm._v("\n            Home\n        ")
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "item" }, [
-          _c("i", { staticClass: "user link icon" }),
-          _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "sui-popup",
-          {
-            attrs: {
-              basic: "",
-              content:
-                "The default theme's basic popup removes the pointing arrow."
-            }
-          },
-          [
-            _c("sui-button", {
-              attrs: { slot: "trigger", icon: "add" },
-              slot: "trigger"
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("a", { staticClass: "item", on: { click: _vm.logout } }, [
-          _vm._v("\n            Logout\n        ")
-        ])
-      ],
-      1
-    )
+    _c("div", { staticClass: "ui pointing menu" }, [
+      _c("a", { staticClass: "item active" }, [
+        _vm._v("\n            Home\n        ")
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "item" }, [
+        _c("i", { staticClass: "user link icon" }),
+        _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("a", { staticClass: "item", on: { click: _vm.logout } }, [
+        _vm._v("\n            Logout\n        ")
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -11415,14 +11389,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -11444,19 +11415,65 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: commentModal,
+  name: "commentModal",
   data: function data() {
     return {
-      comments: []
+      comments: [],
+      content: ""
     };
   },
-  props: ['comments'],
+  props: ["id"],
   methods: {
-    viewModal: function viewModal() {// this.$emit('comments')
+    getComments: function getComments() {
+      var _this = this;
+
+      (0, _axios.default)({
+        method: "get",
+        url: "http://104.198.195.12/comments/all/".concat(this.id),
+        headers: {
+          token: localStorage.getItem("token") //token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+
+        }
+      }).then(function (response) {
+        console.log("comments masuk");
+        _this.comments = response.data;
+      }).catch(function (err) {
+        _this.message = err;
+        _this.isMessage = true;
+      }); // this.$emit('comments')
+    },
+    addComment: function addComment() {
+      var _this2 = this;
+
+      // alert("masuk comment");
+      // console.log(this.id);
+      (0, _axios.default)({
+        method: "post",
+        url: "http://104.198.195.12/comments/add/".concat(this.id),
+        headers: {
+          token: localStorage.getItem("token") // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+
+        },
+        data: {
+          content: this.content
+        }
+      }).then(function (response) {
+        // console.log("masuk");
+        _this2.getComments();
+
+        _this2.content = "";
+      }).catch(function (err) {
+        _this2.message = err;
+        _this2.isMessage = true;
+      });
+    },
+    getId: function getId(id) {
+      this.id = id;
     }
   },
   components: {},
-  created: function created() {// this.viewModal()
+  created: function created() {
+    this.getComments();
   }
 };
 exports.default = _default;
@@ -11472,39 +11489,58 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ui basic modal" }, [
-    _c("div", { staticClass: "content" }, [
+  return _c("div", [
+    _c(
+      "form",
+      {
+        staticClass: "ui reply form",
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addComment($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "field" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.content,
+                expression: "content"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.content },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.content = $event.target.value
+              }
+            }
+          })
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ui comments" }, [
       _c(
         "div",
-        { staticClass: "ui comments" },
-        [
-          _c("h3", { staticClass: "ui dividing header" }, [_vm._v("Comments")]),
-          _vm._v(" "),
-          _vm._l(_vm.comments, function(comment) {
-            return _c(
-              "div",
-              {
-                key: comment._id,
-                staticClass: "comment",
-                attrs: { comments: _vm.comments }
-              },
-              [
-                _c("a", { staticClass: "avatar" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "content" }, [
-                  _c("a", { staticClass: "author" }, [
-                    _vm._v(" " + _vm._s(comment.userId) + " ")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "text" }, [
-                    _vm._v("\n      " + _vm._s(comment.content) + "\n    ")
-                  ])
-                ])
-              ]
-            )
-          })
-        ],
-        2
+        { staticClass: "comment" },
+        _vm._l(_vm.comments, function(comment) {
+          return _c("div", { key: comment._id, staticClass: "content" }, [
+            _c("div", { staticClass: "metadata" }, [
+              _c("span", { staticClass: "date" }, [
+                _vm._v(" " + _vm._s(comment.content) + " ")
+              ])
+            ])
+          ])
+        }),
+        0
       )
     ])
   ])
@@ -11542,7 +11578,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/cardComponent.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/cardComponent.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11593,76 +11629,67 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var url = "http://104.198.195.12";
 var _default = {
-  name: 'cardComponent',
+  name: "cardComponent",
   data: function data() {
     return {
-      showComment: false,
-      comments: [],
-      message: '',
+      showModal: false,
+      id: "",
+      message: "",
       isMessage: false,
-      username: localStorage.getItem('username')
+      username: null
     };
   },
-  props: ['post'],
+  props: ["post"],
   methods: {
-    viewComment: function viewComment(id) {
+    likePost: function likePost(id) {
       var _this = this;
 
       (0, _axios.default)({
-        method: 'get',
-        url: "http://localhost:3000/comments/all/".concat(id),
+        method: "put",
+        url: "".concat(url, "/posts/like/").concat(id),
         headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+          token: localStorage.getItem("token")
         }
       }).then(function (response) {
-        console.log('masuk');
-        _this.comments = response.data;
+        _this.$emit("like");
       }).catch(function (err) {
         _this.message = err;
         _this.isMessage = true;
       });
     },
-    likePost: function likePost(id) {
-      var _this2 = this;
-
-      (0, _axios.default)({
-        method: 'put',
-        url: "http://localhost:3000/posts/like/".concat(id),
-        headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-        }
-      }).then(function (response) {
-        // console.log('masuk')
-        _this2.$emit('like');
-      }).catch(function (err) {
-        _this2.message = err;
-        _this2.isMessage = true;
-      });
-    },
-    addComment: function addComment(id) {
-      var _this3 = this;
-
-      (0, _axios.default)({
-        method: 'get',
-        url: "http://localhost:3000/comments/add/".concat(id),
-        headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-        },
-        data: {
-          content: document.getElementById('comment-input')
-        }
-      }).then(function (response) {
-        console.log('masuk');
-
-        _this3.$emit('add-comment');
-      }).catch(function (err) {
-        _this3.message = err;
-        _this3.isMessage = true;
-      });
+    toggleModal: function toggleModal() {
+      if (this.showModal) {
+        this.showModal = false;
+      } else {
+        this.showModal = true;
+      }
     }
   },
   components: {
@@ -11684,9 +11711,43 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ui card" }, [
     _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "right floated meta" }, [_vm._v("14h")]),
+      _c("div", { staticClass: "right floated meta" }, [
+        _c(
+          "div",
+          {
+            staticClass: "fb-share-button",
+            attrs: {
+              "data-href": _vm.post.imageUrl,
+              "data-layout": "button",
+              "data-size": "small"
+            }
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "fb-xfbml-parse-ignore",
+                staticStyle: { "text-align": "left" },
+                attrs: {
+                  target: "_blank",
+                  href:
+                    "https://www.facebook.com/sharer/sharer.php?u=" +
+                    _vm.post.imageUrl,
+                  onclick:
+                    "javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"
+                }
+              },
+              [_vm._m(0)]
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
-      _vm._v("\n        " + _vm._s(_vm.username) + "\n    ")
+      _c("img", {
+        staticClass: "ui avatar image",
+        attrs: { src: _vm.post.userId.profileImage }
+      }),
+      _vm._v("\n\n    " + _vm._s(_vm.username) + "\n  ")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "image" }, [
@@ -11694,64 +11755,57 @@ exports.default = _default;
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "content" }, [
-      _vm._v("\n        " + _vm._s(_vm.post.caption) + "\n    ")
+      _vm._v("\n    " + _vm._s(_vm.post.caption) + "\n  ")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "content" }, [
-      _c("span", { staticClass: "right floated" }, [
-        _c("i", {
-          staticClass: "heart outline like icon",
-          on: {
-            click: function($event) {
-              return _vm.likePost(_vm.post._id)
-            }
-          }
-        }),
-        _vm._v("\n        " + _vm._s(_vm.post.likes.length) + "\n        ")
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          on: {
-            click: function($event) {
-              return _vm.viewComment(_vm.post._id)
-            }
-          }
-        },
-        [_c("i", { staticClass: "comment icon" })]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "extra content" }, [
-      _c("div", { staticClass: "ui large transparent left icon input" }, [
-        _c("form", [
-          _c("i", { staticClass: "heart outline icon" }),
-          _vm._v(" "),
-          _c("input", {
-            attrs: {
-              type: "text",
-              id: "comment-input",
-              placeholder: "Add Comment..."
-            },
+    _c(
+      "div",
+      { staticClass: "content" },
+      [
+        _c("span", { staticClass: "right floated" }, [
+          _c("i", {
+            staticClass: "heart outline like icon",
             on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.addComment(_vm.post._id)
+              click: function($event) {
+                return _vm.likePost(_vm.post._id)
               }
             }
-          })
-        ])
-      ])
-    ])
+          }),
+          _vm._v("\n      " + _vm._s(_vm.post.likes.length) + "\n    ")
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("i", {
+            staticClass: "comment icon",
+            on: { click: _vm.toggleModal }
+          }),
+          _vm._v("\n      " + _vm._s(_vm.post.comments) + "\n    ")
+        ]),
+        _vm._v(" "),
+        _vm.showModal
+          ? _c("comment-modal", { attrs: { id: _vm.post._id } })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { "text-align": "left" } }, [
+      _c("img", {
+        staticStyle: { width: "60px" },
+        attrs: {
+          src:
+            "https://www.pngkey.com/png/detail/207-2071361_facebook-share-icon-small.png"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
           return {
@@ -11791,7 +11845,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -11815,7 +11873,34 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: "addPostingComponent"
+  name: "addPostingComponent",
+  data: function data() {
+    return {
+      caption: null
+    };
+  },
+  methods: {
+    postIt: function postIt(e) {
+      e.preventDefault();
+      var formData = new FormData();
+      var imagefile = document.querySelector('#file');
+      formData.append("image", imagefile.files[0]);
+
+      _axios.default.post('http://104.198.195.12/posts/add', {
+        caption: this.caption,
+        imageUrl: formData
+      }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    file: function file() {}
+  }
 };
 exports.default = _default;
         var $2b5441 = exports.default || module.exports;
@@ -11831,30 +11916,34 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ui form" }, [
-    _c("form", { staticClass: "ui form", on: { submit: _vm.login } }, [
-      _c("div", { staticClass: "ui grid" }, [
+    _c("form", { staticClass: "ui form", on: { submit: _vm.postIt } }, [
+      _c("div", { staticClass: "ui menu" }, [
+        _c("div", { staticClass: "item" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.caption,
+                expression: "caption"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Caption", size: "50" },
+            domProps: { value: _vm.caption },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.caption = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "four wide column" }, [
-          _c(
-            "button",
-            {
-              staticClass: "ui black labeled icon button",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.register($event)
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "user icon" }),
-              _vm._v("\n                    Post it !\n                ")
-            ]
-          )
-        ])
+        _vm._m(1)
       ])
     ])
   ])
@@ -11864,11 +11953,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "three wide column" }, [
-      _c("label", [_vm._v("Caption")]),
+    return _c("div", { staticClass: "item" }, [
+      _c("label", [_vm._v("Image")]),
       _vm._v(" "),
       _c("input", {
-        attrs: { type: "text", placeholder: "Caption", size: "50" }
+        attrs: {
+          id: "file",
+          type: "file",
+          placeholder: "Image",
+          accept: ".gif,.jpg,.jpeg,.png"
+        }
       })
     ])
   },
@@ -11876,16 +11970,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "four wide column" }, [
-      _c("label", [_vm._v("Image")]),
-      _vm._v(" "),
-      _c("input", {
-        attrs: {
-          type: "file",
-          placeholder: "Image",
-          accept: ".gif,.jpg,.jpeg,.png"
-        }
-      })
+    return _c("div", { staticClass: "item" }, [
+      _c(
+        "button",
+        {
+          staticClass: "ui black labeled icon button",
+          attrs: { type: "submit" }
+        },
+        [
+          _c("i", { staticClass: "user icon" }),
+          _vm._v("\n                    Post it !\n                ")
+        ]
+      )
     ])
   }
 ]
@@ -11921,131 +12017,6 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/userProfile.vue":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = {
-  name: "userProfile",
-  data: function data() {
-    return {
-      user: '',
-      message: '',
-      isMessage: false
-    };
-  },
-  components: {// messageComponent
-  },
-  methods: {
-    getUser: function getUser() {
-      var _this = this;
-
-      (0, _axios.default)({
-        method: 'get',
-        url: 'http://localhost:3000/users/user',
-        headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
-        }
-      }).then(function (user) {
-        console.log(user.data);
-        _this.user = user.data;
-      }).catch(function (err) {
-        _this.message = err;
-        _this.isMessage = true;
-      });
-    }
-  },
-  created: function created() {
-    this.getUser();
-  }
-};
-exports.default = _default;
-        var $d600a5 = exports.default || module.exports;
-      
-      if (typeof $d600a5 === 'function') {
-        $d600a5 = $d600a5.options;
-      }
-    
-        /* template */
-        Object.assign($d600a5, (function () {
-          var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ui card" }, [
-    _c("div", { staticClass: "content" }, [
-      _c("a", { staticClass: "header" }, [
-        _vm._v(" " + _vm._s(_vm.user.username) + " ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "email" }, [
-        _vm._v("\n      " + _vm._s(_vm.user.email) + "\n    ")
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-          return {
-            render: render,
-            staticRenderFns: staticRenderFns,
-            _compiled: true,
-            _scopeId: null,
-            functional: undefined
-          };
-        })());
-      
-    /* hot reload */
-    (function () {
-      if (module.hot) {
-        var api = require('vue-hot-reload-api');
-        api.install(require('vue'));
-        if (api.compatible) {
-          module.hot.accept();
-          if (!module.hot.data) {
-            api.createRecord('$d600a5', $d600a5);
-          } else {
-            api.reload('$d600a5', $d600a5);
-          }
-        }
-
-        
-        var reloadCSS = require('_css_loader');
-        module.hot.dispose(reloadCSS);
-        module.hot.accept(reloadCSS);
-      
-      }
-    })();
 },{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/mainContainerComponent.vue":[function(require,module,exports) {
 "use strict";
 
@@ -12062,8 +12033,6 @@ var _cardComponent = _interopRequireDefault(require("./cardComponent"));
 
 var _addPostingComponent = _interopRequireDefault(require("./addPostingComponent"));
 
-var _userProfile = _interopRequireDefault(require("./userProfile"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //
@@ -12086,32 +12055,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+// import userProfile from "./userProfile";
+var url = "http://104.198.195.12";
 var _default = {
   name: "mainContainerComponent",
   data: function data() {
     return {
       posts: [],
-      message: '',
-      isMessage: false
+      message: "",
+      isMessage: false,
+      author: null
     };
   },
   components: {
     mainNavbarComponent: _mainNavbarComponent.default,
     cardComponent: _cardComponent.default,
-    addPostingComponent: _addPostingComponent.default,
-    userProfile: _userProfile.default
+    addPostingComponent: _addPostingComponent.default // userProfile
+
   },
   methods: {
     getPosts: function getPosts() {
       var _this = this;
 
-      alert('masuk sini');
       (0, _axios.default)({
-        // method: 'get',
-        url: 'http://localhost:3000/posts/all',
+        method: "get",
+        url: url + "/posts/all",
         headers: {
-          // token: localStorage.getItem('token')
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGU5ZDFkOTYyZjhkNzMzOGUxYzE5ZTIiLCJ1c2VybmFtZSI6ImFhYSIsImVtYWlsIjoiYmJiQG1haWwuY29tIiwiaWF0IjoxNTc1NjA0Njk3fQ.VG8s4hNlu6fg_zGD7qwGOeFCKre3ZZO15J-KFr0sGLM"
+          token: localStorage.token
         }
       }).then(function (response) {
         console.log(response.data);
@@ -12119,6 +12092,23 @@ var _default = {
       }).catch(function (err) {
         _this.message = err;
         _this.isMessage = true;
+      });
+    },
+    getAuthor: function getAuthor(userId) {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        method: "get",
+        url: url + "/users/",
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        _this2.posts = response.data;
+      }).catch(function (err) {
+        _this2.message = err;
+        _this2.isMessage = true;
       });
     }
   },
@@ -12152,26 +12142,21 @@ exports.default = _default;
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "ui segment" },
-        [
-          _c(
-            "p",
-            _vm._l(_vm.posts, function(post) {
-              return _c("card-component", {
-                key: post._id,
-                attrs: { post: post },
-                on: { like: _vm.getPosts, "add-comment": _vm.getPosts }
-              })
-            }),
-            1
-          ),
-          _vm._v(" "),
-          _c("user-profile")
-        ],
-        1
-      )
+      _c("div", { staticClass: "ui four column grid" }, [
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.posts, function(post) {
+            return _c("card-component", {
+              key: post._id,
+              staticClass: "column",
+              attrs: { post: post },
+              on: { like: _vm.getPosts, "add-comment": _vm.getPosts }
+            })
+          }),
+          1
+        )
+      ])
     ],
     1
   )
@@ -12209,7 +12194,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./mainNavbarComponent":"src/components/mainNavbarComponent.vue","./cardComponent":"src/components/cardComponent.vue","./addPostingComponent":"src/components/addPostingComponent.vue","./userProfile":"src/components/userProfile.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./mainNavbarComponent":"src/components/mainNavbarComponent.vue","./cardComponent":"src/components/cardComponent.vue","./addPostingComponent":"src/components/addPostingComponent.vue","_css_loader":"../../../../../usr/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12347,7 +12332,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36103" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39947" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
