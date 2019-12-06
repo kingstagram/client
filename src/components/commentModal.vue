@@ -5,7 +5,7 @@
   <h3 class="ui dividing header">Comments</h3>
   <div class="comment">
     <a class="avatar">
-      <img src="/images/avatar/small/matt.jpg">
+      <!-- <img src="/images/avatar/small/matt.jpg"> -->
     </a>
     <div class="content">
       <a class="author">Matt</a>
