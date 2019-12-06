@@ -1,7 +1,26 @@
 <template>
     <div class="ui card">
        <div class="content">
-            <div class="right floated meta">14h</div>
+           <div class="right floated meta">
+                        <div
+                            class="fb-share-button"
+                            :data-href="post.imageUrl"
+                            data-layout="button"
+                            data-size="small"
+                            >
+                            <a
+                                style="text-align: left"
+                                target="_blank"
+                                :href="'https://www.facebook.com/sharer/sharer.php?u=' + post.imageUrl"
+                                class="fb-xfbml-parse-ignore"
+                                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"
+                            >
+                                <span style="text-align: left">
+                                <img src="https://www.pngkey.com/png/detail/207-2071361_facebook-share-icon-small.png" style="width: 60px">
+                                </span>
+                            </a>
+                        </div>
+            </div>
             <img class="ui avatar image" v-bind:src="post.userId.profileImage">
             {{ username }}
         </div>
@@ -43,7 +62,7 @@
         name: 'cardComponent',
         data () {
             return {
-                showModal: true,
+                showModal: false,
                 id: '',
                 message: '',
                 isMessage: false,

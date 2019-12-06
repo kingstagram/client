@@ -11622,11 +11622,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'cardComponent',
   data: function data() {
     return {
-      showModal: true,
+      showModal: false,
       id: '',
       message: '',
       isMessage: false,
@@ -11680,7 +11699,37 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ui card" }, [
     _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "right floated meta" }, [_vm._v("14h")]),
+      _c("div", { staticClass: "right floated meta" }, [
+        _c(
+          "div",
+          {
+            staticClass: "fb-share-button",
+            attrs: {
+              "data-href": _vm.post.imageUrl,
+              "data-layout": "button",
+              "data-size": "small"
+            }
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "fb-xfbml-parse-ignore",
+                staticStyle: { "text-align": "left" },
+                attrs: {
+                  target: "_blank",
+                  href:
+                    "https://www.facebook.com/sharer/sharer.php?u=" +
+                    _vm.post.imageUrl,
+                  onclick:
+                    "javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"
+                }
+              },
+              [_vm._m(0)]
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c("img", {
         staticClass: "ui avatar image",
@@ -11729,7 +11778,22 @@ exports.default = _default;
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { "text-align": "left" } }, [
+      _c("img", {
+        staticStyle: { width: "60px" },
+        attrs: {
+          src:
+            "https://www.pngkey.com/png/detail/207-2071361_facebook-share-icon-small.png"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
           return {
@@ -12177,7 +12241,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43081" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45753" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
